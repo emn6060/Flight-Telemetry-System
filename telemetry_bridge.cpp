@@ -12,7 +12,7 @@ using namespace std;
 
 #pragma comment(lib, "Ws2_32.lib")
 
-// Global Degiskenler
+// Global degiskenler
 HANDLE hSimConnect = NULL;
 int quit = 0;
 SOCKET udpSock;
