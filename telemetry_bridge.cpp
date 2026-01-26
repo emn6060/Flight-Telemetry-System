@@ -8,6 +8,8 @@
 #include <iostream>
 #include "SimConnect.h"
 
+using namespace std;
+
 #pragma comment(lib, "Ws2_32.lib")
 
 // Global Degiskenler
@@ -48,8 +50,8 @@ void CALLBACK DispatchHandler(SIMCONNECT_RECV* pData, DWORD cbData, void* pConte
         SIMCONNECT_RECV_SIMOBJECT_DATA* pObjData = (SIMCONNECT_RECV_SIMOBJECT_DATA*)pData;
         FlightTelemetry* data = (FlightTelemetry*)&pObjData->dwData;
 
-        // Konsol Log (Debug icin)
-        std::cout << "VS: " << (int)data->v_speed
+        // Konsol Log 
+        cout << "VS: " << (int)data->v_speed
             << " | RA: " << (int)data->radio_alt
             << " | G: " << data->g_force
             << " | GND: " << data->on_ground << "\n";
@@ -70,12 +72,13 @@ void CALLBACK DispatchHandler(SIMCONNECT_RECV* pData, DWORD cbData, void* pConte
 int __cdecl main(int argc, char* argv[])
 {
     setup_udp();
-    std::cout << "Flight Telemetry System baslatiliyor...\n";
-    std::cout << "Simulator baglantisi bekleniyor...\n";
+    
+    cout << "Flight Telemetry System baslatiliyor...\n";
+    cout << "Simulator baglantisi bekleniyor...\n";
 
     if (SUCCEEDED(SimConnect_Open(&hSimConnect, "TelemetryBridge", NULL, 0, 0, 0)))
     {
-        std::cout << "Baglanti basarili! Veri akisi basliyor.\n";
+        cout << "Baglanti basarili! Veri akisi basliyor.\n";
 
         // Veri Tanimlari
         SimConnect_AddToDataDefinition(hSimConnect, DEF_TELEM, "VERTICAL SPEED", "Feet per minute", SIMCONNECT_DATATYPE_FLOAT64);
@@ -97,7 +100,7 @@ int __cdecl main(int argc, char* argv[])
     }
     else
     {
-        std::cout << "HATA: Flight Simulator bulunamadi. Lutfen sim'i acip tekrar deneyin.\n";
+        cout << "HATA: Flight Simulator bulunamadi. Lutfen sim'i acip tekrar deneyin.\n";
         system("PAUSE");
     }
 
